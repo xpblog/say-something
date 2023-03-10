@@ -8,12 +8,14 @@ from github import Github
 from feedgen.feed import FeedGenerator
 from lxml.etree import CDATA
 
-MD_HEAD = """## Say something
+MD_HEAD = """## 胡言乱语
 - 记录学习
 - 记录生活
 - 记录感悟
 
 > 桃李春风一杯酒，江湖雨夜十年灯
+<br/>
+
 """
 
 BACKUP_DIR = "BACKUP"
