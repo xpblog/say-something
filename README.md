@@ -7,5 +7,8 @@
 <br/>
 
 ## 最近更新
+- [脚步慢下来，才能欣赏周围的风景](https://github.com/xpblog/say-something/issues/3) `2023-03-10`
 - [2023，新年新气象，告别2022，加油，出发！](https://github.com/xpblog/say-something/issues/2) `2023-03-10`
 - [第一篇博文](https://github.com/xpblog/say-something/issues/1) `2023-03-10`
+## 感悟
+- [2023，新年新气象，告别2022，加油，出发！](https://github.com/xpblog/say-something/issues/2) `2023-03-10`
