@@ -2,13 +2,14 @@
 import argparse
 import os
 import re
+import random
 
 from marko.ext.gfm import gfm as marko
 from github import Github
 from feedgen.feed import FeedGenerator
 from lxml.etree import CDATA
 
-MD_HEAD = """## 胡言乱语
+MD_HEAD = """## :fish: 胡言乱语
 - 记录学习
 - 记录生活
 - 记录感悟
@@ -23,6 +24,7 @@ ANCHOR_NUMBER = 5
 TOP_ISSUES_LABELS = ["Top"]
 TODO_ISSUES_LABELS = ["TODO"]
 FRIENDS_LABELS = ["Friends"]
+EMOJI = [":camel:",":rose:",":camera:", ":meat_on_bone:", ":sweet_potato:", ":oncoming_automobile:", ":bicyclist:"]
 IGNORE_LABELS = FRIENDS_LABELS + TOP_ISSUES_LABELS + TODO_ISSUES_LABELS
 
 
@@ -104,7 +106,7 @@ def add_md_todo(repo, md, me):
     if not TODO_ISSUES_LABELS or not todo_issues:
         return
     with open(md, "a+", encoding="utf-8") as md:
-        md.write("## TODO\n")
+        md.write("## :jack_o_lantern: TODO\n")
         for issue in todo_issues:
             if is_me(issue, me):
                 todo_title, todo_list = parse_TODO(issue)
@@ -120,11 +122,10 @@ def add_md_top(repo, md, me):
     if not TOP_ISSUES_LABELS or not top_issues:
         return
     with open(md, "a+", encoding="utf-8") as md:
-        md.write("## 置顶文章\n")
+        md.write("## :+1: 置顶文章\n")
         for issue in top_issues:
             if is_me(issue, me):
                 add_issue_info(issue, md)
-
 
 
 
@@ -133,7 +134,7 @@ def add_md_recent(repo, md, me, limit=5):
     with open(md, "a+", encoding="utf-8") as md:
         # one the issue that only one issue and delete (pyGitHub raise an exception)
         try:
-            md.write("## 最近更新\n")
+            md.write("## :gift_heart: 最近更新\n")
             for issue in repo.get_issues():
                 if is_me(issue, me):
                     add_issue_info(issue, md)
@@ -147,7 +148,6 @@ def add_md_recent(repo, md, me, limit=5):
 def add_md_header(md, repo_name):
     with open(md, "w", encoding="utf-8") as md:
         md.write(MD_HEAD.format(repo_name=repo_name))
-
 
 def add_md_label(repo, md, me):
     labels = get_repo_labels(repo)
@@ -165,7 +165,9 @@ def add_md_label(repo, md, me):
 
             issues = get_issues_from_label(repo, label)
             if issues.totalCount:
-                md.write("## " + label.name + "\n")
+                random_index = random.randrange(len(EMOJI))
+                emo = EMOJI[random_index]
+                md.write("## "+ emo + " " + label.name + "\n")
                 issues = sorted(issues, key=lambda x: x.created_at, reverse=True)
             i = 0
             for issue in issues:
