@@ -10,27 +10,7 @@ from feedgen.feed import FeedGenerator
 from lxml.etree import CDATA
 
 MD_HEAD = """
-```text
-                                    _.._   _..---.
-                             .-"    ;-"       \
-                            /      /           |
-                           |      |       _=   |
-                          ;   _.-'\__.-')     |
-                           `-'      |   |    ;
-                                     |  /;   /      _,
-                                   .-.;.-=-./-""-.-` _`
-                                  /   |     \     \-` `,
-                                 |    |      |     |
-                                 |____|______|     |
-                                  \0 / \0   /      /
-                               .--.-""-.`--'     .'
-                             (#   )          ,  \
-                              ('--'          /\`  \
-                               \       ,,  .'      \
-                                `-._    _.'\        \
-                                   `""`    \        \
-
-```
+<p align="center"><img width="100%" src="https://raw.githubusercontent.com/xpblog/say-something/main/hello.gif"></p>
 
 - 记录学习
 - 记录生活
