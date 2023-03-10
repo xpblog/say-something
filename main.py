@@ -11,7 +11,7 @@ from lxml.etree import CDATA
 
 MD_HEAD = """## :fish: 胡言乱语
 
-<p align="center"><img width="100" src="https://raw.githubusercontent.com/xpblog/say-something/main/hello.png"></p>
+<p align="center"><img width="100%" src="https://raw.githubusercontent.com/xpblog/say-something/main/hello.png"></p>
 
 - 记录学习
 - 记录生活
