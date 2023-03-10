@@ -9,9 +9,24 @@ from github import Github
 from feedgen.feed import FeedGenerator
 from lxml.etree import CDATA
 
-MD_HEAD = """## :fish: 胡言乱语
-
-<p align="center"><img width="100%" src="https://raw.githubusercontent.com/xpblog/say-something/main/hello.png"></p>
+MD_HEAD = """
+```text
+                  ***********
+               ***** ***********
+            ** ****** *** ********
+           ****  ******  ** *******
+           ***     ******* ** ******
+           ***       **        *  **
+            *|/------  -------\ ** *
+             |       |=|       :===**
+              |  O  |   | O   |  }|*
+               |---- |   ----  |  |*
+               |    |___       |\/
+               |              |
+               \   -----     |
+                \           |
+                  -__ -- -/
+```
 
 - 记录学习
 - 记录生活
