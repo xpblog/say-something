@@ -8,9 +8,12 @@ from github import Github
 from feedgen.feed import FeedGenerator
 from lxml.etree import CDATA
 
-MD_HEAD = """## Gitblog
-My personal blog using issues and GitHub Actions (随意转载，无需署名)
-[RSS Feed](https://raw.githubusercontent.com/{repo_name}/master/feed.xml)
+MD_HEAD = """## Say something
+- 记录学习
+- 记录生活
+- 记录感悟
+
+> 桃李春风一杯酒，江湖雨夜十年灯
 """
 
 BACKUP_DIR = "BACKUP"
@@ -19,14 +22,6 @@ TOP_ISSUES_LABELS = ["Top"]
 TODO_ISSUES_LABELS = ["TODO"]
 FRIENDS_LABELS = ["Friends"]
 IGNORE_LABELS = FRIENDS_LABELS + TOP_ISSUES_LABELS + TODO_ISSUES_LABELS
-
-FRIENDS_TABLE_HEAD = "| Name | Link | Desc | \n | ---- | ---- | ---- |\n"
-FRIENDS_TABLE_TEMPLATE = "| {name} | {link} | {desc} |\n"
-FRIENDS_INFO_DICT = {
-    "名字": "",
-    "链接": "",
-    "描述": "",
-}
 
 
 def get_me(user):
@@ -43,26 +38,6 @@ def is_hearted_by_me(comment, me):
         if r.content == "heart" and r.user.login == me:
             return True
     return False
-
-
-def _make_friend_table_string(s):
-    info_dict = FRIENDS_INFO_DICT.copy()
-    try:
-        string_list = s.splitlines()
-        # drop empty line
-        string_list = [l for l in string_list if l and not l.isspace()]
-        for l in string_list:
-            string_info_list = re.split("：", l)
-            if len(string_info_list) < 2:
-                continue
-            info_dict[string_info_list[0]] = string_info_list[1]
-        return FRIENDS_TABLE_TEMPLATE.format(
-            name=info_dict["名字"], link=info_dict["链接"], desc=info_dict["描述"]
-        )
-    except Exception as e:
-        print(str(e))
-        return
-
 
 # help to covert xml vaild string
 def _valid_xml_char_ordinal(c):
@@ -119,7 +94,7 @@ def get_issues_from_label(repo, label):
 
 def add_issue_info(issue, md):
     time = format_time(issue.created_at)
-    md.write(f"- [{issue.title}]({issue.html_url})--{time}\n")
+    md.write(f"- [{issue.title}]({issue.html_url}) `{time}`\n")
 
 
 def add_md_todo(repo, md, me):
@@ -149,20 +124,6 @@ def add_md_top(repo, md, me):
                 add_issue_info(issue, md)
 
 
-def add_md_firends(repo, md, me):
-    s = FRIENDS_TABLE_HEAD
-    friends_issues = list(repo.get_issues(labels=FRIENDS_LABELS))
-    for issue in friends_issues:
-        for comment in issue.get_comments():
-            if is_hearted_by_me(comment, me):
-                try:
-                    s += _make_friend_table_string(comment.body)
-                except Exception as e:
-                    print(str(e))
-                    pass
-    with open(md, "a+", encoding="utf-8") as md:
-        md.write("## 友情链接\n")
-        md.write(s)
 
 
 def add_md_recent(repo, md, me, limit=5):
@@ -189,7 +150,7 @@ def add_md_header(md, repo_name):
 def add_md_label(repo, md, me):
     labels = get_repo_labels(repo)
 
-    # sort lables by description info if it exists, otherwise sort by name, 
+    # sort lables by description info if it exists, otherwise sort by name,
     # for example, we can let the description start with a number (1#Java, 2#Docker, 3#K8s, etc.)
     labels = sorted(labels, key=lambda x: (x.description is None, x.description == "", x.description, x.name))
 
@@ -234,43 +195,15 @@ def get_to_generate_issues(repo, dir_name, issue_number=None):
     return to_generate_issues
 
 
-def generate_rss_feed(repo, filename, me):
-    generator = FeedGenerator()
-    generator.id(repo.html_url)
-    generator.title(f"RSS feed of {repo.owner.login}'s {repo.name}")
-    generator.author(
-        {"name": os.getenv("GITHUB_NAME"), "email": os.getenv("GITHUB_EMAIL")}
-    )
-    generator.link(href=repo.html_url)
-    generator.link(
-        href=f"https://raw.githubusercontent.com/{repo.full_name}/master/{filename}",
-        rel="self",
-    )
-    for issue in repo.get_issues():
-        if not issue.body or not is_me(issue, me) or issue.pull_request:
-            continue
-        item = generator.add_entry(order="append")
-        item.id(issue.html_url)
-        item.link(href=issue.html_url)
-        item.title(issue.title)
-        item.published(issue.created_at.strftime("%Y-%m-%dT%H:%M:%SZ"))
-        for label in issue.labels:
-            item.category({"term": label.name})
-        body = "".join(c for c in issue.body if _valid_xml_char_ordinal(c))
-        item.content(CDATA(marko.convert(body)), type="html")
-    generator.atom_file(filename)
-
-
 def main(token, repo_name, issue_number=None, dir_name=BACKUP_DIR):
     user = login(token)
     me = get_me(user)
     repo = get_repo(user, repo_name)
     # add to readme one by one, change order here
     add_md_header("README.md", repo_name)
-    for func in [add_md_firends, add_md_top, add_md_recent, add_md_label, add_md_todo]:
+    for func in [add_md_top, add_md_recent, add_md_label, add_md_todo]:
         func(repo, "README.md", me)
 
-    generate_rss_feed(repo, "feed.xml", me)
     to_generate_issues = get_to_generate_issues(repo, dir_name, issue_number)
 
     # save md files to backup folder
