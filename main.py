@@ -10,6 +10,9 @@ from feedgen.feed import FeedGenerator
 from lxml.etree import CDATA
 
 MD_HEAD = """## :fish: 胡言乱语
+
+<p align="center"><img width="100" src="https://raw.githubusercontent.com/xpblog/say-something/main/hello.png"></p>
+
 - 记录学习
 - 记录生活
 - 记录感悟
@@ -205,7 +208,8 @@ def main(token, repo_name, issue_number=None, dir_name=BACKUP_DIR):
     repo = get_repo(user, repo_name)
     # add to readme one by one, change order here
     add_md_header("README.md", repo_name)
-    for func in [add_md_top, add_md_recent, add_md_label, add_md_todo]:
+    #for func in [add_md_top, add_md_recent, add_md_label, add_md_todo]:
+    for func in [add_md_label]:
         func(repo, "README.md", me)
 
     to_generate_issues = get_to_generate_issues(repo, dir_name, issue_number)
