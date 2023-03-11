@@ -100,7 +100,10 @@ def get_issues_from_label(repo, label):
 
 def add_issue_info(issue, md):
     time = format_time(issue.created_at)
-    md.write(f"- [{issue.title}]({issue.html_url}) `{time}`\n")
+    # md.write(f"- [{issue.title}]({issue.html_url}) `{time}`\n")
+    html_url = {issue.number} + '_' + {issue.title.replace(' ', '.')} + '.md'
+    html_url = 'https://github.com/xpblog/say-something/blob/main/BACKUP/' + html_url
+    md.write(f"- [{issue.title}](html_url) `{time}`\n")
 
 
 def add_md_todo(repo, md, me):
