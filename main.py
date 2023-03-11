@@ -211,7 +211,7 @@ def main(token, repo_name, issue_number=None, dir_name=BACKUP_DIR):
     # add to readme one by one, change order here
     add_md_header("README.md", repo_name)
     #for func in [add_md_top, add_md_recent, add_md_label, add_md_todo]:
-    for func in [add_md_label]:
+    for func in [add_md_recent, add_md_label]:
         func(repo, "README.md", me)
 
     to_generate_issues = get_to_generate_issues(repo, dir_name, issue_number)
