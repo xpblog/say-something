@@ -233,7 +233,7 @@ def save_issue(issue, me, dir_name=BACKUP_DIR):
                 if is_me(c, me):
                     f.write("\n\n---\n\n")
                     f.write(c.body)
-
+        f.write(f"### ["返回"](https://github.com/xpblog/say-something)\n\n")
 
 if __name__ == "__main__":
     if not os.path.exists(BACKUP_DIR):
