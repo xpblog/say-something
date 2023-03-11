@@ -103,7 +103,7 @@ def add_issue_info(issue, md):
     # md.write(f"- [{issue.title}]({issue.html_url}) `{time}`\n")
     html_url = f"{issue.number}_{issue.title.replace(' ', '.')}.md"
     print(html_url)
-    html_url = f"https://github.com/xpblog/say-something/blob/main/BACKUP/{issue.number}_{issue.title.replace(' ', '.')}.md""
+    html_url = f"https://github.com/xpblog/say-something/blob/main/BACKUP/{issue.number}_{issue.title.replace(' ', '.')}.md"
     md.write(f"- [{issue.title}](html_url) `{time}`\n")
 
 
