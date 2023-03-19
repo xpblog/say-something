@@ -136,10 +136,15 @@ def add_md_top(repo, md, me):
 
 def add_md_recent(repo, md, me, limit=5):
     labels = get_repo_labels(repo)
-    
+    i = 0
+    for issue in issues:
+        if not issue:
+            continue
+        i += 1
+        
     count = 0
     with open(md, "a+", encoding="utf-8") as md:
-        md.write("<tr rowspan='" + str(len(labels)) + "'>")
+        md.write("<tr rowspan='" + str(i*2) + "'>")
         # one the issue that only one issue and delete (pyGitHub raise an exception)
         try:
             md.write("## :gift_heart: 最近更新\n")
@@ -169,6 +174,7 @@ def add_md_label(repo, md, me):
 
     with open(md, "a+", encoding="utf-8") as md:
         md.write("<table>")
+        md.write("<td>")
         for label in labels:
 
             # we don't need add top label again
@@ -183,7 +189,7 @@ def add_md_label(repo, md, me):
                 md.write("<td style='font-size:bold'>"+ emo + " " + label.name + "<td>")
                 issues = sorted(issues, key=lambda x: x.created_at, reverse=True)
             i = 0
-            md.write("<td>")
+            
             for issue in issues:
                 if not issue:
                     continue
@@ -196,7 +202,7 @@ def add_md_label(repo, md, me):
             if i > ANCHOR_NUMBER:
                 md.write("</details>\n")
                 md.write("\n")
-            md.write("</td>")
+        md.write("</td>")
 
 
 def get_to_generate_issues(repo, dir_name, issue_number=None):
