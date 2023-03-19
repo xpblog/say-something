@@ -137,9 +137,7 @@ def add_md_top(repo, md, me):
 def add_md_recent(repo, md, me, limit=5):
     labels = get_repo_labels(repo)
     i = 0
-    for issue in issues:
-        if not issue:
-            continue
+    if issues.totalCount:
         i += 1
         
     count = 0
