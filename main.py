@@ -99,13 +99,13 @@ def get_issues_from_label(repo, label):
 
 
 def add_issue_info(issue, md):
-    md.write("<td>")
+    #md.write("<td>")
     time = format_time(issue.created_at)
     # md.write(f"- [{issue.title}]({issue.html_url}) `{time}`\n")
     html_url = f"{issue.number}_{issue.title.replace(' ', '.')}.md"
     print(html_url)
     md.write(f"- [{issue.title}](https://github.com/xpblog/say-something/blob/main/BACKUP/{issue.number}_{issue.title.replace(' ', '.')}.md) `{time}`\n")
-    md.write("</td>")
+    #md.write("</td>")
 
 
 
@@ -199,7 +199,7 @@ def add_md_label(repo, md, me):
                     # add_md_recent(repo, "README.md", me)
                 md.write("<tr>")
             i = 0
-            
+            md.write("<td>")
             for issue in issues:
                 if not issue:
                     continue
@@ -212,6 +212,7 @@ def add_md_label(repo, md, me):
             if i > ANCHOR_NUMBER:
                 md.write("</details>\n")
                 md.write("\n")
+            md.write("</td>")
             ###################################
             if state == 1:
                 #add_md_recent(repo, "README.md", me)
