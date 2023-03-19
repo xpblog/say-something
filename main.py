@@ -99,11 +99,14 @@ def get_issues_from_label(repo, label):
 
 
 def add_issue_info(issue, md):
+    md.write("<td>")
     time = format_time(issue.created_at)
     # md.write(f"- [{issue.title}]({issue.html_url}) `{time}`\n")
     html_url = f"{issue.number}_{issue.title.replace(' ', '.')}.md"
     print(html_url)
     md.write(f"- [{issue.title}](https://github.com/xpblog/say-something/blob/main/BACKUP/{issue.number}_{issue.title.replace(' ', '.')}.md) `{time}`\n")
+    md.write("</td>")
+
 
 
 def add_md_todo(repo, md, me):
@@ -182,7 +185,6 @@ def add_md_label(repo, md, me):
             if label.name in IGNORE_LABELS:
                 continue
             state += 1
-            md.write("<tr>")
             issues = get_issues_from_label(repo, label)
             if issues.totalCount:
                 md.write("<tr>")
@@ -207,27 +209,27 @@ def add_md_label(repo, md, me):
                         md.write("\n")
                     add_issue_info(issue, md)
                     i += 1
-                    if state == 1:
-                        #add_md_recent(repo, "README.md", me)
-                        ###################################
-                        i = 0
-                        count = 0
-                        for label in labels:
-                            issues = get_issues_from_label(repo, label)
-                            if issues.totalCount:
-                                i += 1
-                        md.write("<td rowspan='" + str(i*2-1) + "'>")
-                        for issue in repo.get_issues():
-                            if is_me(issue, me):
-                                add_issue_info(issue, md)
-                                count += 1
-                                if count >= 5:
-                                    break
-                        md.write("</td>")
-                        ################################
             if i > ANCHOR_NUMBER:
                 md.write("</details>\n")
                 md.write("\n")
+            ###################################
+            if state == 1:
+                #add_md_recent(repo, "README.md", me)
+                ii = 0
+                count = 0
+                for label in labels:
+                    issues = get_issues_from_label(repo, label)
+                    if issues.totalCount:
+                        ii += 1
+                md.write("<td rowspan='" + str(ii*2-1) + "'>")
+                for issue in repo.get_issues():
+                    if is_me(issue, me):
+                        add_issue_info(issue, md)
+                        count += 1
+                        if count >= 5:
+                            break
+                md.write("</td>")
+                        ################################
             md.write("</tr>")
 
 
