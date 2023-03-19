@@ -151,7 +151,7 @@ def add_md_recent(repo, md, me, limit=5):
         # one the issue that only one issue and delete (pyGitHub raise an exception)
         try:
             md.write("<td style='font-weight:bold'>")
-            md.write("## :gift_heart: 最近更新\n")
+            md.write(":gift_heart: 最近更新\n")
             md.write("</td>")
             md.write("<td rowspan='" + str(i*2-1) + "'>")
             for issue in repo.get_issues():
