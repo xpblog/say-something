@@ -144,13 +144,12 @@ def add_md_recent(repo, md, me, limit=5):
         
     count = 0
     with open(md, "a+", encoding="utf-8") as md:
-        md.write("<tr rowspan='" + str(i*2) + "'>")
         # one the issue that only one issue and delete (pyGitHub raise an exception)
         try:
             md.write("<td style='font-size:bold'>")
             md.write("## :gift_heart: 最近更新\n")
             md.write("</td>")
-            md.write("<td>")
+            md.write("<td rowspan='" + str(i*2-1) + "'>")
             for issue in repo.get_issues():
                 if is_me(issue, me):
                     add_issue_info(issue, md)
@@ -160,9 +159,6 @@ def add_md_recent(repo, md, me, limit=5):
             md.write("</td>")
         except:
             return
-        md.write("</td>")
-        md.write("</tr>")
-        md.write("</table>")
 
 
 def add_md_header(md, repo_name):
@@ -180,12 +176,12 @@ def add_md_label(repo, md, me):
     with open(md, "a+", encoding="utf-8") as md:
         md.write("<table>")
         md.write("<tr>")
+        state = 0
         for label in labels:
-
             # we don't need add top label again
             if label.name in IGNORE_LABELS:
                 continue
-
+            state ++
             issues = get_issues_from_label(repo, label)
             if issues.totalCount:
                 random_index = random.randrange(len(EMOJI))
@@ -203,6 +199,8 @@ def add_md_label(repo, md, me):
                         md.write("\n")
                     add_issue_info(issue, md)
                     i += 1
+                    if state == 1:
+                        add_md_recent(repo, "README.md", me)
             if i > ANCHOR_NUMBER:
                 md.write("</details>\n")
                 md.write("\n")
@@ -232,8 +230,9 @@ def main(token, repo_name, issue_number=None, dir_name=BACKUP_DIR):
     add_md_header("README.md", repo_name)
     #for func in [add_md_top, add_md_recent, add_md_label, add_md_todo]:
     
-    for func in [add_md_label, add_md_recent]:
-        func(repo, "README.md", me)
+    #for func in [add_md_label, add_md_recent]:
+    #    func(repo, "README.md", me)
+    add_md_label(repo, "README.md", me)
     
     to_generate_issues = get_to_generate_issues(repo, dir_name, issue_number)
 
