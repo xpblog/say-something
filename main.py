@@ -159,7 +159,7 @@ def add_md_header(md, repo_name):
         md.write(MD_HEAD.format(repo_name=repo_name))
 
 def add_md_label(repo, md, me):
-    md.write("<table>")
+    
     labels = get_repo_labels(repo)
 
     # sort lables by description info if it exists, otherwise sort by name,
@@ -167,7 +167,7 @@ def add_md_label(repo, md, me):
     labels = sorted(labels, key=lambda x: (x.description is None, x.description == "", x.description, x.name))
 
     with open(md, "a+", encoding="utf-8") as md:
-        
+        md.write("<table>")
         for label in labels:
 
             # we don't need add top label again
