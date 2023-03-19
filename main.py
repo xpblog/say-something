@@ -175,13 +175,14 @@ def add_md_label(repo, md, me):
 
     with open(md, "a+", encoding="utf-8") as md:
         md.write("<table>")
-        md.write("<tr>")
+        
         state = 0
         for label in labels:
             # we don't need add top label again
             if label.name in IGNORE_LABELS:
                 continue
             state ++
+            md.write("<tr>")
             issues = get_issues_from_label(repo, label)
             if issues.totalCount:
                 random_index = random.randrange(len(EMOJI))
@@ -204,7 +205,7 @@ def add_md_label(repo, md, me):
             if i > ANCHOR_NUMBER:
                 md.write("</details>\n")
                 md.write("\n")
-        md.write("</tr>")
+            md.write("</tr>")
 
 
 def get_to_generate_issues(repo, dir_name, issue_number=None):
