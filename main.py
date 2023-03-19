@@ -185,10 +185,17 @@ def add_md_label(repo, md, me):
             md.write("<tr>")
             issues = get_issues_from_label(repo, label)
             if issues.totalCount:
+                md.write("<tr>")
                 random_index = random.randrange(len(EMOJI))
                 emo = EMOJI[random_index]
                 md.write("<td style='font-size:bold'>"+ emo + " " + label.name + "<td>")
                 issues = sorted(issues, key=lambda x: x.created_at, reverse=True)
+                if state == 1:
+                    md.write("<td style='font-size:bold'>")
+                    md.write("## :gift_heart: 最近更新\n")
+                    md.write("</td>")
+                    # add_md_recent(repo, "README.md", me)
+                md.write("<tr>")
             i = 0
             
             for issue in issues:
@@ -201,7 +208,22 @@ def add_md_label(repo, md, me):
                     add_issue_info(issue, md)
                     i += 1
                     if state == 1:
-                        add_md_recent(repo, "README.md", me)
+                        #add_md_recent(repo, "README.md", me)
+                        ###################################
+                        i = 0
+                        for label in labels:
+                            issues = get_issues_from_label(repo, label)
+                            if issues.totalCount:
+                                i += 1
+                        md.write("<td rowspan='" + str(i*2-1) + "'>")
+                        for issue in repo.get_issues():
+                            if is_me(issue, me):
+                                add_issue_info(issue, md)
+                                count += 1
+                                if count >= limit:
+                                    break
+                        md.write("</td>")
+                        ################################
             if i > ANCHOR_NUMBER:
                 md.write("</details>\n")
                 md.write("\n")
