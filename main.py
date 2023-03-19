@@ -174,7 +174,7 @@ def add_md_label(repo, md, me):
 
     with open(md, "a+", encoding="utf-8") as md:
         md.write("<table>")
-        md.write("<td>")
+        md.write("<tr>")
         for label in labels:
 
             # we don't need add top label again
@@ -185,7 +185,6 @@ def add_md_label(repo, md, me):
             if issues.totalCount:
                 random_index = random.randrange(len(EMOJI))
                 emo = EMOJI[random_index]
-                md.write("<tr>")
                 md.write("<td style='font-size:bold'>"+ emo + " " + label.name + "<td>")
                 issues = sorted(issues, key=lambda x: x.created_at, reverse=True)
             i = 0
@@ -202,7 +201,7 @@ def add_md_label(repo, md, me):
             if i > ANCHOR_NUMBER:
                 md.write("</details>\n")
                 md.write("\n")
-        md.write("</td>")
+        md.write("</tr>")
 
 
 def get_to_generate_issues(repo, dir_name, issue_number=None):
