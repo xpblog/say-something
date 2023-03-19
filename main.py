@@ -137,8 +137,10 @@ def add_md_top(repo, md, me):
 def add_md_recent(repo, md, me, limit=5):
     labels = get_repo_labels(repo)
     i = 0
-    if issues.totalCount:
-        i += 1
+    for label in labels:
+        issues = get_issues_from_label(repo, label)
+        if issues.totalCount:
+            i += 1
         
     count = 0
     with open(md, "a+", encoding="utf-8") as md:
