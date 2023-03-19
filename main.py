@@ -221,7 +221,7 @@ def add_md_label(repo, md, me):
                             if is_me(issue, me):
                                 add_issue_info(issue, md)
                                 count += 1
-                                if count >= limit:
+                                if count >= 5:
                                     break
                         md.write("</td>")
                         ################################
