@@ -104,7 +104,8 @@ def add_issue_info(issue, md):
     # md.write(f"- [{issue.title}]({issue.html_url}) `{time}`\n")
     html_url = f"{issue.number}_{issue.title.replace(' ', '.')}.md"
     print(html_url)
-    md.write(f"- [{issue.title}](https://github.com/xpblog/say-something/blob/main/BACKUP/{issue.number}_{issue.title.replace(' ', '.')}.md) `{time}`\n")
+    #md.write(f"- [{issue.title}](https://github.com/xpblog/say-something/blob/main/BACKUP/{issue.number}_{issue.title.replace(' ', '.')}.md) `{time}`\n")
+    md.write(f"<a href='https://github.com/xpblog/say-something/blob/main/BACKUP/{issue.number}_{issue.title.replace(' ', '.')}.md'> {issue.title}_`{time}`</a>")
     #md.write("</td>")
 
 
@@ -149,7 +150,7 @@ def add_md_recent(repo, md, me, limit=5):
     with open(md, "a+", encoding="utf-8") as md:
         # one the issue that only one issue and delete (pyGitHub raise an exception)
         try:
-            md.write("<td style='font-size:bold'>")
+            md.write("<td style='font-weight:bold'>")
             md.write("## :gift_heart: 最近更新\n")
             md.write("</td>")
             md.write("<td rowspan='" + str(i*2-1) + "'>")
@@ -190,10 +191,10 @@ def add_md_label(repo, md, me):
                 md.write("<tr>")
                 random_index = random.randrange(len(EMOJI))
                 emo = EMOJI[random_index]
-                md.write("<td style='font-size:bold'>"+ emo + " " + label.name + "<td>")
+                md.write("<td style='font-weight:bold'>"+ emo + " " + label.name + "</td>")
                 issues = sorted(issues, key=lambda x: x.created_at, reverse=True)
                 if state == 1:
-                    md.write("<td style='font-size:bold'>")
+                    md.write("<td style='font-weight:bold'>")
                     md.write("## :gift_heart: 最近更新\n")
                     md.write("</td>")
                     # add_md_recent(repo, "README.md", me)
