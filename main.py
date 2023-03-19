@@ -181,7 +181,7 @@ def add_md_label(repo, md, me):
             # we don't need add top label again
             if label.name in IGNORE_LABELS:
                 continue
-            state ++
+            state += 1
             md.write("<tr>")
             issues = get_issues_from_label(repo, label)
             if issues.totalCount:
