@@ -139,7 +139,7 @@ def add_md_recent(repo, md, me, limit=5):
     
     count = 0
     with open(md, "a+", encoding="utf-8") as md:
-        md.write("<tr rowspan='" + len(labels) + "'>")
+        md.write("<tr rowspan='" + str(len(labels)) + "'>")
         # one the issue that only one issue and delete (pyGitHub raise an exception)
         try:
             md.write("## :gift_heart: 最近更新\n")
