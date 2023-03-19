@@ -135,6 +135,8 @@ def add_md_top(repo, md, me):
 
 
 def add_md_recent(repo, md, me, limit=5):
+    labels = get_repo_labels(repo)
+    md.write("<tr rowspan='" + len(labels) + "'>")
     count = 0
     with open(md, "a+", encoding="utf-8") as md:
         # one the issue that only one issue and delete (pyGitHub raise an exception)
@@ -148,6 +150,7 @@ def add_md_recent(repo, md, me, limit=5):
                         break
         except:
             return
+    md.write("</tr>")
 
 
 def add_md_header(md, repo_name):
@@ -162,6 +165,7 @@ def add_md_label(repo, md, me):
     labels = sorted(labels, key=lambda x: (x.description is None, x.description == "", x.description, x.name))
 
     with open(md, "a+", encoding="utf-8") as md:
+        
         for label in labels:
 
             # we don't need add top label again
@@ -172,9 +176,11 @@ def add_md_label(repo, md, me):
             if issues.totalCount:
                 random_index = random.randrange(len(EMOJI))
                 emo = EMOJI[random_index]
-                md.write("## "+ emo + " " + label.name + "\n")
+                md.write("<tr>")
+                md.write("<td style='font-size:bold'>"+ emo + " " + label.name + "<td>")
                 issues = sorted(issues, key=lambda x: x.created_at, reverse=True)
             i = 0
+            md.write("<td>")
             for issue in issues:
                 if not issue:
                     continue
@@ -187,6 +193,7 @@ def add_md_label(repo, md, me):
             if i > ANCHOR_NUMBER:
                 md.write("</details>\n")
                 md.write("\n")
+            md.write("</td>")
 
 
 def get_to_generate_issues(repo, dir_name, issue_number=None):
@@ -211,9 +218,10 @@ def main(token, repo_name, issue_number=None, dir_name=BACKUP_DIR):
     # add to readme one by one, change order here
     add_md_header("README.md", repo_name)
     #for func in [add_md_top, add_md_recent, add_md_label, add_md_todo]:
-    for func in [add_md_recent, add_md_label]:
+    md.write("<table>")
+    for func in [add_md_label, add_md_recent]:
         func(repo, "README.md", me)
-
+    md.write("</table>")
     to_generate_issues = get_to_generate_issues(repo, dir_name, issue_number)
 
     # save md files to backup folder
