@@ -211,6 +211,7 @@ def add_md_label(repo, md, me):
                         #add_md_recent(repo, "README.md", me)
                         ###################################
                         i = 0
+                        count = 0
                         for label in labels:
                             issues = get_issues_from_label(repo, label)
                             if issues.totalCount:
