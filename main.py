@@ -136,9 +136,10 @@ def add_md_top(repo, md, me):
 
 def add_md_recent(repo, md, me, limit=5):
     labels = get_repo_labels(repo)
-    md.write("<tr rowspan='" + len(labels) + "'>")
+    
     count = 0
     with open(md, "a+", encoding="utf-8") as md:
+        md.write("<tr rowspan='" + len(labels) + "'>")
         # one the issue that only one issue and delete (pyGitHub raise an exception)
         try:
             md.write("## :gift_heart: 最近更新\n")
@@ -150,8 +151,8 @@ def add_md_recent(repo, md, me, limit=5):
                         break
         except:
             return
-    md.write("</tr>")
-    md.write("</table>")
+        md.write("</tr>")
+        md.write("</table>")
 
 
 def add_md_header(md, repo_name):
