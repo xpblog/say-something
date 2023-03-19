@@ -151,6 +151,7 @@ def add_md_recent(repo, md, me, limit=5):
         except:
             return
     md.write("</tr>")
+    md.write("</table>")
 
 
 def add_md_header(md, repo_name):
@@ -158,6 +159,7 @@ def add_md_header(md, repo_name):
         md.write(MD_HEAD.format(repo_name=repo_name))
 
 def add_md_label(repo, md, me):
+    md.write("<table>")
     labels = get_repo_labels(repo)
 
     # sort lables by description info if it exists, otherwise sort by name,
@@ -218,10 +220,10 @@ def main(token, repo_name, issue_number=None, dir_name=BACKUP_DIR):
     # add to readme one by one, change order here
     add_md_header("README.md", repo_name)
     #for func in [add_md_top, add_md_recent, add_md_label, add_md_todo]:
-    md.write("<table>")
+    
     for func in [add_md_label, add_md_recent]:
         func(repo, "README.md", me)
-    md.write("</table>")
+    
     to_generate_issues = get_to_generate_issues(repo, dir_name, issue_number)
 
     # save md files to backup folder
