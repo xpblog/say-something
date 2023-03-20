@@ -105,7 +105,7 @@ def add_issue_info(issue, md):
     html_url = f"{issue.number}_{issue.title.replace(' ', '.')}.md"
     print(html_url)
     #md.write(f"- [{issue.title}](https://github.com/xpblog/say-something/blob/main/BACKUP/{issue.number}_{issue.title.replace(' ', '.')}.md) `{time}`\n")
-    md.write(f"<a href='https://github.com/xpblog/say-something/blob/main/BACKUP/{issue.number}_{issue.title.replace(' ', '.')}.md'> {issue.title}</a>   [{time}]")
+    md.write(f"<br/><a href='https://github.com/xpblog/say-something/blob/main/BACKUP/{issue.number}_{issue.title.replace(' ', '.')}.md'> {issue.title}</a>   [{time}]")
     #md.write("</td>")
 
 
@@ -209,6 +209,7 @@ def add_md_label(repo, md, me):
                         md.write("<details><summary>显示更多</summary>\n")
                         md.write("\n")
                     add_issue_info(issue, md)
+                    md.write("<br/>")
                     i += 1
             if i > ANCHOR_NUMBER:
                 md.write("</details>\n")
