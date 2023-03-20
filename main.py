@@ -191,7 +191,7 @@ def add_md_label(repo, md, me):
                 md.write("<tr>")
                 random_index = random.randrange(len(EMOJI))
                 emo = EMOJI[random_index]
-                md.write("<td style='font-weight:bold'>"+ emo + " " + label.name + "</td>")
+                md.write("<td align='center'>"+ emo + " " + label.name + "</td>")
                 issues = sorted(issues, key=lambda x: x.created_at, reverse=True)
                 if state == 1:
                     md.write("<td style='font-weight:bold'>")
