@@ -233,7 +233,7 @@ def add_md_label(repo, md, me):
                             break
                 md.write("</td>")
                         ################################
-            md.write("<br/></tr>")
+            md.write("</tr>")
 
 
 def get_to_generate_issues(repo, dir_name, issue_number=None):
