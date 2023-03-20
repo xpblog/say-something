@@ -209,8 +209,8 @@ def add_md_label(repo, md, me):
                         md.write("<details><summary>显示更多</summary>\n")
                         md.write("\n")
                     add_issue_info(issue, md)
-                    md.write("<br/>")
                     i += 1
+            md.write("<br/>")
             if i > ANCHOR_NUMBER:
                 md.write("</details>\n")
                 md.write("\n")
