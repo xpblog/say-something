@@ -210,11 +210,11 @@ def add_md_label(repo, md, me):
                         md.write("\n")
                     add_issue_info(issue, md)
                     i += 1
-            md.write("<br/>")
+    
             if i > ANCHOR_NUMBER:
                 md.write("</details>\n")
                 md.write("\n")
-            md.write("</td>")
+            md.write("<br/></td>")
             ###################################
             if state == 1:
                 #add_md_recent(repo, "README.md", me)
