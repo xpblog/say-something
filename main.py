@@ -214,7 +214,7 @@ def add_md_label(repo, md, me):
             if i > ANCHOR_NUMBER:
                 md.write("</details>\n")
                 md.write("\n")
-            md.write("<br/></td>")
+            md.write("</td>")
             ###################################
             if state == 1:
                 #add_md_recent(repo, "README.md", me)
@@ -233,7 +233,7 @@ def add_md_label(repo, md, me):
                             break
                 md.write("</td>")
                         ################################
-            md.write("</tr>")
+            md.write("<br/></tr>")
 
 
 def get_to_generate_issues(repo, dir_name, issue_number=None):
