@@ -105,7 +105,7 @@ def add_issue_info(issue, md):
     html_url = f"{issue.number}_{issue.title.replace(' ', '.')}.md"
     print(html_url)
     #md.write(f"- [{issue.title}](https://github.com/xpblog/say-something/blob/main/BACKUP/{issue.number}_{issue.title.replace(' ', '.')}.md) `{time}`\n")
-    md.write(f"<a href='https://github.com/xpblog/say-something/blob/main/BACKUP/{issue.number}_{issue.title.replace(' ', '.')}.md'> {issue.title}</a>  <img src='https://img.shields.io/badge/-{time}-lightgrey?style=flat-square&logo='/> <br/><br/>")
+    md.write(f"<br/><a href='https://github.com/xpblog/say-something/blob/main/BACKUP/{issue.number}_{issue.title.replace(' ', '.')}.md'> {issue.title}</a>  <img src='https://img.shields.io/badge/-{time}-lightgrey?style=flat-square&logo='/> <br/>")
     #md.write("</td>")
 
 
@@ -191,11 +191,11 @@ def add_md_label(repo, md, me):
                 md.write("<tr>")
                 random_index = random.randrange(len(EMOJI))
                 emo = EMOJI[random_index]
-                md.write("<td align='center'>"+ emo + " " + label.name + "</td> <br/>")
+                md.write("<td align='center'>"+ emo + " " + label.name + "</td>")
                 issues = sorted(issues, key=lambda x: x.created_at, reverse=True)
                 if state == 1:
                     md.write("<td style='font-weight:bold'>")
-                    md.write(":gift_heart: 最近更新\n <br/>")
+                    md.write(":gift_heart: 最近更新\n")
                     md.write("</td>")
                     # add_md_recent(repo, "README.md", me)
                 md.write("<tr>")
