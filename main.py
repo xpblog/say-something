@@ -195,7 +195,7 @@ def add_md_label(repo, md, me):
                 issues = sorted(issues, key=lambda x: x.created_at, reverse=True)
                 if state == 1:
                     md.write("<td style='font-weight:bold'>")
-                    md.write("## :gift_heart: 最近更新\n")
+                    md.write(":gift_heart: 最近更新\n")
                     md.write("</td>")
                     # add_md_recent(repo, "README.md", me)
                 md.write("<tr>")
