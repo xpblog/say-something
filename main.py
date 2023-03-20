@@ -100,7 +100,7 @@ def get_issues_from_label(repo, label):
 
 def add_issue_info(issue, md):
     #md.write("<td>")
-    time = format_time(issue.created_at).strftime("%m/%d/%y")
+    time = format_time(issue.created_at.strftime("%m/%d/%y"))
     # md.write(f"- [{issue.title}]({issue.html_url}) `{time}`\n")
     html_url = f"{issue.number}_{issue.title.replace(' ', '.')}.md"
     print(html_url)
